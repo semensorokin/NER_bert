@@ -33,9 +33,6 @@ from tqdm import tqdm, trange
 from transformers import (
     WEIGHTS_NAME,
     AdamW,
-    AlbertConfig,
-    AlbertForTokenClassification,
-    AlbertTokenizer,
     BertConfig,
     BertForTokenClassification,
     BertTokenizer,
