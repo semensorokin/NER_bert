@@ -36,18 +36,6 @@ from transformers import (
     BertConfig,
     BertForTokenClassification,
     BertTokenizer,
-    CamembertConfig,
-    CamembertForTokenClassification,
-    CamembertTokenizer,
-    DistilBertConfig,
-    DistilBertForTokenClassification,
-    DistilBertTokenizer,
-    RobertaConfig,
-    RobertaForTokenClassification,
-    RobertaTokenizer,
-    XLMRobertaConfig,
-    XLMRobertaForTokenClassification,
-    XLMRobertaTokenizer,
     get_linear_schedule_with_warmup,
 )
 from utils_ner import convert_examples_to_features, get_labels, read_examples_from_file
@@ -64,10 +52,14 @@ logger = logging.getLogger(__name__)
 ALL_MODELS = sum(
     (
         tuple(conf.pretrained_config_archive_map.keys())
-        for conf in (BertConfig, RobertaConfig, DistilBertConfig, CamembertConfig, XLMRobertaConfig)
+        for conf in (BertConfig, )
     ),
     (),
 )
+
+BertTokenizer = BertTokenizer('./rubert_cased_L-12_H-768_A-12_pt/vocab.txt')
+BertForTokenClassification.from_pretrained('./rubert_cased_L-12_H-768_A-12_pt/')
+BertConfig = BertConfig.from_pretrained('./rubert_cased_L-12_H-768_A-12_pt/')
 
 MODEL_CLASSES = {
     "bert": (BertConfig, BertForTokenClassification, BertTokenizer),
