@@ -10,11 +10,13 @@ def load_gz_lines(path, encoding='utf8', gzip=gzip):
             yield json.loads(line.decode(encoding).rstrip())
 
 
-def parse_json_line(path_nerus, n = 100000):
+def parse_json_line(path_nerus, n = 30000 , save_to = 'train_nerus.txt'):
 
-    file = open('train.txt', 'w+')
     flag = 0
+    file = open(save_to, 'w+')
+
     for indx, text in tqdm(enumerate(load_gz_lines(path_nerus))):
+
 
         left_context_len, right_context_len = -1, -1
         flag += 1
@@ -26,7 +28,7 @@ def parse_json_line(path_nerus, n = 100000):
             for indx, span in enumerate(text['annotations']):
                 st_en = span['span']
 
-                if (st_en['start']) >= left_context_len and (st_en['end']) <= right_context_len:
+                if int(st_en['start']) >= left_context_len and int(st_en['end']) <= right_context_len:
                     span = text['annotations'][indx]
                     span['span']['start'] -= left_context_len
                     span['span']['end'] -= left_context_len
@@ -57,12 +59,13 @@ def parse_json_line(path_nerus, n = 100000):
             file.write('\n')
 
         if flag == n:
-            print('First {} lines executed'.format(n) )
+            print('First {} lines executed'.format(n))
             file.close()
             break
 
-parse_json_line('nerus_lenta.jsonl.gz')
 
+if __name__ == "__main__":
+    parse_json_line('nerus_lenta.jsonl.gz')
 
 
 
