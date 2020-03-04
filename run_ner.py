@@ -57,9 +57,10 @@ ALL_MODELS = sum(
     (),
 )
 
-BertTokenizer = BertTokenizer('./rubert_cased_L-12_H-768_A-12_pt/vocab.txt')
-BertForTokenClassification.from_pretrained('./rubert_cased_L-12_H-768_A-12_pt/')
-BertConfig = BertConfig.from_pretrained('./rubert_cased_L-12_H-768_A-12_pt/')
+#BertTokenizer = BertTokenizer('./model/checkpoint-1000/vocab.txt')
+#BertForTokenClassification.from_pretrained('./model/checkpoint-1000/', num_labels = 9)
+#
+BertConfig = BertConfig.from_pretrained('././model/checkpoint-1000/')
 
 MODEL_CLASSES = {
     "bert": (BertConfig, BertForTokenClassification, BertTokenizer),
@@ -484,13 +485,13 @@ def main():
     )
     parser.add_argument(
         "--max_steps",
-        default=-1,
+        default=100,
         type=int,
         help="If > 0: set total number of training steps to perform. Override num_train_epochs.",
     )
     parser.add_argument("--warmup_steps", default=0, type=int, help="Linear warmup over warmup_steps.")
 
-    parser.add_argument("--logging_steps", type=int, default=500, help="Log every X updates steps.")
+    parser.add_argument("--logging_steps", type=int, default=50, help="Log every X updates steps.")
     parser.add_argument("--save_steps", type=int, default=500, help="Save checkpoint every X updates steps.")
     parser.add_argument(
         "--eval_all_checkpoints",
